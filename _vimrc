@@ -115,7 +115,6 @@ endif
 " 如果想在 windows 安装就必需先安装 "git for window"，可查阅网上资料
 set autochdir                                         "自动切换目录到打开的文件
 set nocompatible                                      "禁用 Vi 兼容模式
-filetype off                                          "禁用文件类型侦测
 
 if g:islinux
     set rtp+=~/.vim/bundle/vundle
@@ -158,7 +157,7 @@ Bundle 'TxtBrowser'
 Bundle 'ZoomWin'
 Bundle 'fatih/vim-go'
 Bundle 'fatih/molokai'
-Bundle 'vim-cmake-syntax'
+Bundle 'githubmota/vim-cmake-syntax'
 
 " -----------------------------------------------------------------------------
 "  < 编码配置 >
@@ -185,10 +184,93 @@ endif
 " Add by myself
 " ----------------------------------
 au BufNewFile,BufRead *.g setf make
-au BufNewFile,BufRead *.tsf setf vb 
-au BufNewFile,BufRead *.go set filetype=go 
-" au BufNewFile,BufRead *.java set filetype=java 
+au BufNewFile,BufRead *.tsf setf vb
+au BufNewFile,BufRead *.go set filetype=go
+" au BufNewFile,BufRead *.java set filetype=java
 au BufRead,BufNewFile *.cmake,CMakeLists.txt setf cmake
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""新文件标题
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"新建.c,.h,.sh,.java文件，自动插入文件头
+autocmd BufNewFile *.cpp,*.[ch],*.sh,*.rb,*.java,*.py exec ":call SetTitle()"
+""定义函数SetTitle，自动插入文件头
+func SetTitle()
+	"如果文件类型为.sh文件
+	if &filetype == 'sh'
+		call setline(1,"\#!/bin/bash")
+		call append(line("."), "")
+    elseif &filetype == 'python'
+        call setline(1,"#!/usr/bin/env python")
+        call append(line("."),"# coding=utf-8")
+	    call append(line(".")+1, "")
+
+    elseif &filetype == 'ruby'
+        call setline(1,"#!/usr/bin/env ruby")
+        call append(line("."),"# encoding: utf-8")
+	    call append(line(".")+1, "")
+
+"    elseif &filetype == 'mkd'
+"        call setline(1,"<head><meta charset=\"UTF-8\"></head>")
+	else
+		call setline(1, "/*************************************************************************")
+		call append(line("."), "	> File Name: ".expand("%"))
+		call append(line(".")+1, "	> Author: ")
+		call append(line(".")+2, "	> Mail: ")
+		call append(line(".")+3, "	> Created Time: ".strftime("%c"))
+		call append(line(".")+4, " ************************************************************************/")
+		call append(line(".")+5, "")
+	endif
+	if expand("%:e") == 'cpp'
+		call append(line(".")+6, "#include<iostream>")
+		call append(line(".")+7, "using namespace std;")
+		call append(line(".")+8, "")
+	endif
+	if &filetype == 'c'
+		call append(line(".")+6, "#include<stdio.h>")
+		call append(line(".")+7, "")
+	endif
+	if expand("%:e") == 'h'
+		call append(line(".")+6, "#ifndef _".toupper(expand("%:r"))."_H")
+		call append(line(".")+7, "#define _".toupper(expand("%:r"))."_H")
+		call append(line(".")+8, "#endif")
+	endif
+	if &filetype == 'java'
+		call append(line(".")+6,"public class ".expand("%:r"))
+		call append(line(".")+7,"")
+	endif
+	"新建文件后，自动定位到文件末尾
+endfunc
+autocmd BufNewFile * normal G
+
+"代码格式优化化
+
+map <F6> :call FormartSrc()<CR><CR>
+
+"定义FormartSrc()
+func FormartSrc()
+    exec "w"
+    if &filetype == 'c'
+        exec "!astyle --style=ansi -a --suffix=none %"
+    elseif &filetype == 'cpp' || &filetype == 'hpp'
+        exec "r !astyle --style=ansi --one-line=keep-statements -a --suffix=none %> /dev/null 2>&1"
+    elseif &filetype == 'perl'
+        exec "!astyle --style=gnu --suffix=none %"
+    elseif &filetype == 'py'||&filetype == 'python'
+        exec "r !autopep8 -i --aggressive %"
+    elseif &filetype == 'java'
+        exec "!astyle --style=java --suffix=none %"
+    elseif &filetype == 'jsp'
+        exec "!astyle --style=gnu --suffix=none %"
+    elseif &filetype == 'xml'
+        exec "!astyle --style=gnu --suffix=none %"
+    else
+        exec "normal gg=G"
+        return
+    endif
+    exec "e! %"
+endfunc
+"结束定义FormartSrc
 
 " for javacomplete2
 " autocmd FileType java setlocal omnifunc=javacomplete#Complete
