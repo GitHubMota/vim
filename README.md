@@ -1,3 +1,6 @@
+# 运行截图
+![screenshot.png](screenshot.png)
+
 # vim配置
 Installation(Supported Ubuntu/Centos/Mac OS)
 
