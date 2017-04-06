@@ -186,6 +186,7 @@ endif
 au BufNewFile,BufRead *.g setf make
 au BufNewFile,BufRead *.tsf setf vb
 au BufNewFile,BufRead *.go set filetype=go
+au BufNewFile,BufRead *.cpy set filetype=python
 " au BufNewFile,BufRead *.java set filetype=java
 au BufRead,BufNewFile *.cmake,CMakeLists.txt setf cmake
 
