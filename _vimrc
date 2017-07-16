@@ -334,6 +334,9 @@ set cursorline                                        "突出显示当前行
 set nowrap                                            "设置不自动换行
 set shortmess=atI                                     "去掉欢迎界面
 
+" insert date
+imap xdate <c-r>=strftime("%Y-%m-%d %H:%M:%S +0800")<cr>
+
 " 设置 gVim 窗口初始位置及大小
 if g:isGUI
     au GUIEnter * simalt ~x                           "窗口启动时自动最大化
