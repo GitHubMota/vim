@@ -1043,7 +1043,9 @@ imap <silent> <F8> <Plug>StopMarkdownPreview
 
 " 设置 chrome 浏览器的路径（或是启动 chrome（或其他现代浏览器）的命令
 " let g:mkdp_path_to_chrome = "google-chrome"
-let g:mkdp_path_to_chrome = "open -a Safari"
+" let g:mkdp_path_to_chrome = "open -a Safari"
+let g:mkdp_path_to_chrome = "firefox"
+
 " =============================================================================
 "                          << 以下为常用自动命令配置 >>
 " =============================================================================
