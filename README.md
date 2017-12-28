@@ -8,6 +8,9 @@
 git clone https://github.com/githubmota/vim.git
 cd ./vim; ./install.sh
 ```
+
+PS: If the target machine has no available network, you can just copy _vimrc_base file to your user path, not forget rename it to _vimrc, this file remove all the plugins should be downloaded, but you still need vim had been installed in the target machine.
+
 # ChangeLog
 - 2017/05/23: Add [markdown-preview.vim](https://github.com/iamcco/markdown-preview.vim) support.
 
