@@ -33,9 +33,6 @@ elif [ -L ~/.vimrc ];then
     rm ~/.vimrc
 fi
 ln -s $PWD/_vimrc ~/.vimrc
-if [ ! -d ~/.vim/bundle/vundle ];then
-    git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
-fi
 
 mkdir -p ~/.vim/colors
 cp Tomorrow-Night-Eighties.vim ~/.vim/colors/
@@ -43,6 +40,6 @@ cp Tomorrow-Night-Eighties.vim ~/.vim/colors/
 echo "ma6174正在努力为您安装bundle程序" > ma6174
 echo "安装完毕将自动退出" >> ma6174
 echo "请耐心等待" >> ma6174
-vim ma6174 -c "BundleInstall" -c "q" -c "q"
+vim ma6174 -c "PlugInstall" -c "q" -c "q"
 rm ma6174
 echo "安装完成"

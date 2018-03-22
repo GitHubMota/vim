@@ -1,3 +1,5 @@
+Use [vim-plug](https://github.com/junegunn/vim-plug) as plugin manager
+
 # screenshot
 ![screenshot.png](screenshot.png)
 

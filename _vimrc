@@ -106,58 +106,54 @@ endif
 "                          << 以下为用户自定义配置 >>
 " =============================================================================
 " -----------------------------------------------------------------------------
-"  < Vundle 插件管理工具配置 >
+"  < vim-plug 插件管理工具配置 >
 " -----------------------------------------------------------------------------
-" 用于更方便的管理vim插件，具体用法参考 :h vundle 帮助
-" Vundle工具安装方法为在终端输入如下命令
-" git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
-" 如果想在 windows 安装就必需先安装 "git for window"，可查阅网上资料
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
 set autochdir                                         "自动切换目录到打开的文件
 set nocompatible                                      "禁用 Vi 兼容模式
 
-if g:islinux
-    set rtp+=~/.vim/bundle/vundle
-    call vundle#rc()
-else
-    set rtp+=$VIM/vimfiles/bundle/vundle/
-    call vundle#rc('$VIM/vimfiles/bundle/')
-endif
-
-" 使用Vundle来管理插件，这个必须要有。
-Bundle 'gmarik/vundle'
-
 " 以下为要安装或更新的插件，不同仓库都有（具体书写规范请参考帮助）
-Bundle 'a.vim'
-Bundle 'Align'
-Bundle 'jiangmiao/auto-pairs'
-Bundle 'bufexplorer.zip'
-Bundle 'ccvext.vim'
-Bundle 'cSyntaxAfter'
-Bundle 'ctrlpvim/ctrlp.vim'
-Bundle 'mattn/emmet-vim'
-Bundle 'Yggdroot/indentLine'
-" Bundle 'vim-javacompleteex'
-" Bundle 'artur-shaik/vim-javacomplete2'
-Bundle 'Mark--Karkat'
-Bundle 'Shougo/neocomplcache.vim'
-Bundle 'scrooloose/nerdcommenter'
-Bundle 'scrooloose/nerdtree'
-Bundle 'OmniCppComplete'
-Bundle 'Lokaltog/vim-powerline'
-Bundle 'repeat.vim'
-Bundle 'msanders/snipmate.vim'
-Bundle 'wesleyche/SrcExpl'
-Bundle 'std_c.zip'
-Bundle 'tpope/vim-surround'
-Bundle 'scrooloose/syntastic'
-Bundle 'majutsushi/tagbar'
-Bundle 'taglist.vim'
-Bundle 'TxtBrowser'
-Bundle 'ZoomWin'
-Bundle 'fatih/vim-go'
-Bundle 'fatih/molokai'
-Bundle 'githubmota/vim-cmake-syntax'
-Bundle 'iamcco/markdown-preview.vim'
+call plug#begin('~/.vim/bundle')
+" input :help plug-options to search help for vim-plug
+Plug 'junegunn/vim-plug'
+Plug 'junegunn/vim-xmark', has('mac') ? {} : { 'on': []  }
+Plug 'vim-scripts/a.vim'
+Plug 'vim-scripts/Align'
+Plug 'jiangmiao/auto-pairs'
+Plug 'vim-scripts/bufexplorer.zip'
+Plug 'vim-scripts/ccvext.vim'
+Plug 'vim-scripts/cSyntaxAfter'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'mattn/emmet-vim'
+Plug 'Yggdroot/indentLine'
+" Plug 'vim-javacompleteex'
+" Plug 'artur-shaik/vim-javacomplete2'
+Plug 'vim-scripts/Mark--Karkat'
+Plug 'Shougo/neocomplcache.vim'
+Plug 'scrooloose/nerdcommenter'
+Plug 'scrooloose/nerdtree'
+Plug 'vim-scripts/OmniCppComplete'
+Plug 'Lokaltog/vim-powerline'
+Plug 'vim-scripts/repeat.vim'
+Plug 'msanders/snipmate.vim'
+Plug 'wesleyche/SrcExpl'
+Plug 'vim-scripts/std_c.zip'
+Plug 'tpope/vim-surround'
+Plug 'scrooloose/syntastic'
+Plug 'majutsushi/tagbar'
+Plug 'vim-scripts/taglist.vim'
+Plug 'vim-scripts/Txtbrowser'
+Plug 'vim-scripts/ZoomWin'
+Plug 'fatih/vim-go', {'for': 'go'}
+Plug 'fatih/molokai'
+Plug 'githubmota/vim-cmake-syntax'
+Plug 'iamcco/markdown-preview.vim'
+call plug#end()
 
 " -----------------------------------------------------------------------------
 "  < 编码配置 >
@@ -279,9 +275,10 @@ endfunc
 " -----------------------------------------------------------------------------
 "  < 编写文件时的配置 >
 " -----------------------------------------------------------------------------
-filetype on                                           "启用文件类型侦测
+" vim-plug handle filetype and syntax automatically 
+" filetype on                                           "启用文件类型侦测
+" filetype plugin indent on                             "启用缩进
 filetype plugin on                                    "针对不同的文件类型加载对应的插件
-filetype plugin indent on                             "启用缩进
 set smartindent                                       "启用智能对齐方式
 set expandtab                                         "将Tab键转换为空格
 set tabstop=4                                         "设置Tab键的宽度，可以更改，如：宽度为2
