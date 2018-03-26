@@ -34,6 +34,11 @@ elif [ -L ~/.vimrc ];then
 fi
 ln -s $PWD/_vimrc ~/.vimrc
 
+if [ ! -f ~/.vim/autoload/plug.vim ];then
+    curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+fi
+
 mkdir -p ~/.vim/colors
 cp Tomorrow-Night-Eighties.vim ~/.vim/colors/
 
